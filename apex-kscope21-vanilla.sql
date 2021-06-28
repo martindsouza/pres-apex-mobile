@@ -28,13 +28,13 @@ prompt APPLICATION 139036 - kscope21-demo-vanilla
 -- Application Export:
 --   Application:     139036
 --   Name:            kscope21-demo-vanilla
---   Date and Time:   03:47 Monday June 28, 2021
+--   Date and Time:   12:52 Monday June 28, 2021
 --   Exported By:     GIFFY
 --   Flashback:       0
 --   Export Type:     Application Export
 --     Pages:                      5
 --       Items:                   21
---       Processes:               10
+--       Processes:               11
 --       Regions:                 16
 --       Buttons:                 11
 --       Dynamic Actions:          4
@@ -116,7 +116,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'demo'
 ,p_last_updated_by=>'GIFFY'
-,p_last_upd_yyyymmddhh24miss=>'20210628030300'
+,p_last_upd_yyyymmddhh24miss=>'20210628121159'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>67
 ,p_ui_type_name => null
@@ -11049,7 +11049,7 @@ wwv_flow_api.create_page(
 ,p_autocomplete_on_off=>'OFF'
 ,p_page_template_options=>'#DEFAULT#'
 ,p_last_updated_by=>'GIFFY'
-,p_last_upd_yyyymmddhh24miss=>'20210628023533'
+,p_last_upd_yyyymmddhh24miss=>'20210628121159'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(33934794618888548469)
@@ -11669,6 +11669,36 @@ wwv_flow_api.create_page_da_event(
 ,p_bind_type=>'one'
 ,p_bind_event_type=>'custom'
 ,p_bind_event_type_custom=>'tabsregionchange'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(16510090493596911809)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'SETUP'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'update customers ',
+'set ',
+'    phone_number = null,',
+'    pin = null,',
+'    address_street = null,',
+'    address_city = null,',
+'    address_province = null',
+';',
+'',
+'update customers',
+'set ',
+'    phone_number = ''403-265-2622'',',
+'    address_street = ''401 9 Ave SW'',',
+'    address_city = ''Calgary'',',
+'    address_province = ''Alberta''',
+'where full_name = ''Adam Martinez''',
+';'))
+,p_process_clob_language=>'PLSQL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_comment=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'run via:',
+'apex.page.submit(''SETUP'');'))
 );
 end;
 /

@@ -3,7 +3,6 @@
 - [Inputs](#inputs)
   - [Auto Zoom](#auto-zoom)
   - [Input Modes](#input-modes)
-  - [Hyperlinks](#hyperlinks)
 - [Utilities](#utilities)
   - [Responsive Columns](#responsive-columns)
   - [Footer](#footer)
@@ -66,25 +65,7 @@ Note: Something to consider is that this is good for accessibility as disables z
 - Testing: This is where constantly testing with a device beside you makes a big difference so you see the full experience
 
 
-### Hyperlinks
 
-
-- Enter in user address and phone number:
-  - `403-265-2622`
-  - `401 9 Ave SW` 
-    - `Calgary` 
-    - `Alberta`
-- Show in Report
-  - If techs need to call they need to remember number to enter into phone or copy & paste into maps
-- Phone:
-  - Change to Link
-  - `tel:#PHONE_NUMBER#`
-- Maps:
-  - Change to Link
-  - iOS: `https://maps.apple.com/?q=#ADDRESS#`
-  - Google Maps: `https://maps.google.com/?q=#ADDRESS#`
-    
-More info on [how to launch a map from mobile](https://support.prontoforms.com/hc/en-us/articles/217496598-How-To-Launch-a-Map-App-from-a-Mobile-Form)
 
 
 ## Utilities
@@ -145,9 +126,23 @@ _more to demo_
 
 ### Links
 
-- Change the maps and phone links to:
-- `tel:#PHONE_NUMBER#`
-- `https://maps.apple.com/?q=#ADDRESS#`
+
+- Enter in user address and phone number:
+  - `403-265-2622`
+  - `401 9 Ave SW` 
+    - `Calgary` 
+    - `Alberta`
+- Show in Report
+  - If techs need to call they need to remember number to enter into phone or copy & paste into maps
+- Phone:
+  - Change to Link
+  - `tel:#PHONE_NUMBER#`
+- Maps:
+  - Change to Link
+  - iOS: `https://maps.apple.com/?q=#ADDRESS#`
+  - Google Maps: `https://maps.google.com/?q=#ADDRESS#`
+    
+More info on [how to launch a map from mobile](https://support.prontoforms.com/hc/en-us/articles/217496598-How-To-Launch-a-Map-App-from-a-Mobile-Form)
 
 
 ### Line Clamp
@@ -157,12 +152,11 @@ _more to demo_
   - Has it's issues
 - Solutions
   - SQL: Substring
-    - Problem is that it will force cut then you need to put the logic to add ellipsis (...) in or not
-    - Also what if you do a partial cut. Ex if you say 5 charatres and you have a Locations data. What if you see "Green". Is it Greenland or Greenville? or just a place called "Green"?
+    - Problem is that it will force cut then you need to put the logic to add ellipsis (`...`) in or not
+    - Also what if you do a partial cut. Ex if you say 5 characters and you have a Locations data. What if you see "Green". Is it Greenland or Greenville? or just a place called "Green"?
   - PL/SQL: 
-      - oos_util_string.truncate
-      - More than just a "substring 1,20". Can force cut or truncate to the nearest word but won't exceed number of charaters
-      - https://github.com/OraOpenSource/oos-utils/blob/master/docs/oos_util_string.md#truncate
+      - [`oos_util_string.truncate`](https://github.com/OraOpenSource/oos-utils/blob/master/docs/oos_util_string.md#truncate)
+      - More than just a `substr...`. Can force cut or truncate to the nearest word but won't exceed number of charaters
       - Con: Not the most efficient since does a PL/SQL in an SQL statement. For large reports can slow down so either have a "short" column and precalulate it with a trigger, MV, etc?
 - CSS [`line-clamp`](https://css-tricks.com/almanac/properties/l/line-clamp/) solves this problem.
   - Restricts based on number of lines and add ellipsis if more content.
@@ -187,6 +181,7 @@ _more to demo_
 ### Cards
 
 - Classic / IR reports doesn't look very good on mobile (seen me scrolling)
+  - May also want to put different / more detailed information into the report
 
 ```sql
 select 
@@ -294,7 +289,7 @@ order by full_name
 
 ### Modal Title
 
-- When tighter for space and using modal dialogs the title can be "wasted space". Can change with function:
+- When tighter for space and using modal dialogs the title can be "wasted space". Can dynamically change with function:
 
 ```js
 /**
@@ -312,9 +307,16 @@ setModalDialogTitle = (modalTitle) => {
 
 On the Customer Page add DA:
 - onPageLoad
-- Condition: `P3_FULL_NAME` is not null
-- JavaScript: `setModalDialogTitle(apex.item(this.affectedElements[0]).getValue());`
-- Affected Element: `P3_FULL_NAME`
+  - Action: JavaScript
+    - Condition: `P3_FULL_NAME` is not null
+    - JavaScript: 
+```js
+let pageItem = apex.item(this.affectedElements[0]);
+setModalDialogTitle(pageItem.getValue());
+// Hide the page item since moved to modal title
+pageItem.hide();
+```
+    - Affected Element: `P3_FULL_NAME`
 
 
 ## Other
