@@ -4,6 +4,8 @@
 
 -- SQL Workshop > Utilities > Data Workshop: Add Customers
 
+
+
 alter table products add product_desc varchar2(1000) null;
 
 update products
@@ -51,6 +53,12 @@ where full_name = 'Adam Martinez'
 -- Rename to KSCOPE21-LIVE
 
 -- Disable zooming (left it on so I could do rest of vanilla setup)
+
+-- Close Conent Syncer
+
+-- Start Zoom between iPhone and Mac
+-- Disable locking
+
 
 
 -- Simulator

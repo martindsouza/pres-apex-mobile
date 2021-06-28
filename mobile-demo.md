@@ -1,5 +1,6 @@
 # Mobile Demo
 
+- [Start](#start)
 - [Inputs](#inputs)
   - [Auto Zoom](#auto-zoom)
   - [Input Modes](#input-modes)
@@ -24,7 +25,11 @@
   - [Testing Tools](#testing-tools)
 
 
-Start by looking at the current app
+## Start
+
+- Start by looking at the current app 
+  - In Desktop
+  - In Mobile
 
 
 ## Inputs
